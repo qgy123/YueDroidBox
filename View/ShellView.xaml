@@ -11,7 +11,6 @@
         xmlns:viewModel="clr-namespace:YueDroidBox.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
-        xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
         d:DataContext="{d:DesignInstance viewModel:ShellViewModel}"
         BorderThickness="0"
         GlowBrush="Black"

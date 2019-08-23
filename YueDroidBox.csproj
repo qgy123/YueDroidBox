@@ -131,6 +131,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Core\Adb\Extensions\DeviceExtension.cs" />
+    <Compile Include="Core\Adb\Receiver\PortForwardingReceiver.cs" />
+    <Compile Include="Model\Adb\ForwardingInfo.cs" />
     <Compile Include="Util\CustomTabClient.cs" />
     <Compile Include="ViewModel\TabContent.cs" />
     <Compile Include="View\NewSubWindow.xaml.cs">
@@ -188,9 +191,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Adb\adb.exe" />
     <Content Include="Adb\AdbWinApi.dll" />

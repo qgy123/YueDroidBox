@@ -63,6 +63,7 @@ namespace YueDroidBox.ViewModel
             {
                 items.Add(new SelectableDeviceViewModel { Model = device.Model, Serial = device.Serial });
                 Console.WriteLine($@"{device.Model}({device.Serial})");
+                AdbClient.Instance.
             }
 
             _windowManager.ShowDialog(new DeviceViewModel(items));

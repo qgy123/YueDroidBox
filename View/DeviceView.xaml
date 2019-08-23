@@ -7,6 +7,7 @@
       xmlns:local="clr-namespace:YueDroidBox.View"
       xmlns:viewModel="clr-namespace:YueDroidBox.ViewModel"
       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       Width="300"
       Height="300"
@@ -16,8 +17,35 @@
       FontFamily="{StaticResource MaterialDesignFont}"
       Title="DeviceView">
 
-    <Grid>
-        <ItemsControl ItemsSource="{Binding Items}">
+<mah:MetroWindow.Resources>
+    <Style TargetType="Button" BasedOn="{StaticResource MahApps.Metro.Styles.MetroButton}">
+        <Setter Property="Height" Value="32"></Setter>
+    </Style>
+</mah:MetroWindow.Resources>
+
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <ToggleButton Style="{StaticResource MaterialDesignActionLightToggleButton}" Margin="6 0" Height="20" Width="20" Background="Transparent" materialDesign:HintAssist.Hint="Select All" Click="{s:Action OnSelectAll}">
+                <ToggleButton.Content>
+                    <materialDesign:PackIcon Kind="SelectAll"/>
+                </ToggleButton.Content>
+                <materialDesign:ToggleButtonAssist.OnContent>
+                    <materialDesign:PackIcon Kind="SelectOff" />
+                </materialDesign:ToggleButtonAssist.OnContent>
+            </ToggleButton>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Style="{StaticResource ChromelessButtonStyle}" Margin="5 0" materialDesign:HintAssist.Hint="Refresh" Click="{s:Action OnRefresh}">
+                <materialDesign:PackIcon Kind="Refresh" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
+    <DockPanel>
+        <ItemsControl Height="230" ItemsSource="{Binding Items}" DockPanel.Dock="Top">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type viewModel:SelectableDeviceViewModel}">
                     <Border x:Name="Border" Padding="8">
@@ -41,5 +69,13 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </Grid>
+        <DockPanel Height="35" DockPanel.Dock="Top">
+            <Button
+                Margin="3 0"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Click="{s:Action OnConfirm}">
+                Confirm
+            </Button>
+        </DockPanel>
+    </DockPanel>
 </mah:MetroWindow>

@@ -28,7 +28,6 @@ namespace YueDroidBox.ViewModel
             _windowManager = windowManager;
             _viewManager = viewManager;
 
-            //InterTabClient = new CustomTabClient(_viewManager);
             InterTabClient = new CustomTabClient();
 
             MenuItems = new[]
@@ -52,6 +51,21 @@ namespace YueDroidBox.ViewModel
                 }
             }
 
+        }
+
+        public void SelectDevice()
+        {
+            var devices = Engine.Instance().GetDevices();
+
+            var items = new ObservableCollection<SelectableDeviceViewModel>();
+
+            foreach (var device in devices)
+            {
+                items.Add(new SelectableDeviceViewModel { Model = device.Model, Serial = device.Serial });
+                Console.WriteLine($@"{device.Model}({device.Serial})");
+            }
+
+            _windowManager.ShowDialog(new DeviceViewModel(items));
         }
 
         public void OnLoaded()

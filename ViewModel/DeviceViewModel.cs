@@ -10,8 +10,18 @@ namespace YueDroidBox.ViewModel
 
         public DeviceViewModel(ObservableCollection<SelectableDeviceViewModel> items)
         {
-            this.DisplayName = "Select your device";
+            this.DisplayName = "devices";
             Items = items;
+        }
+
+        public void OnSelectAll()
+        {
+            SelectAll(true, Items);
+        }
+
+        public void OnConfirm()
+        {
+
         }
 
         public static void SelectAll(bool select, IEnumerable<SelectableDeviceViewModel> models)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,18 +22,21 @@ namespace YueDroidBox.ViewModel
 
         private readonly IWindowManager _windowManager;
         private readonly IViewManager _viewManager;
+        private readonly PortForwardingViewModel _portForwardingViewModel;
 
-        public ShellViewModel(IWindowManager windowManager, IViewManager viewManager)
+        public ShellViewModel(IWindowManager windowManager, IViewManager viewManager,
+            PortForwardingViewModel portForwardingViewModel)
         {
             this.DisplayName = "YueDroidBox";
             _windowManager = windowManager;
             _viewManager = viewManager;
+            _portForwardingViewModel = portForwardingViewModel;
 
             InterTabClient = new CustomTabClient();
 
             MenuItems = new[]
             {
-                new MenuItemViewModel("Port Forwarding", new PortForwardingViewModel()),
+                new MenuItemViewModel("Port Forwarding", _portForwardingViewModel),
             };
         }
 
@@ -55,34 +59,14 @@ namespace YueDroidBox.ViewModel
 
         public void SelectDevice()
         {
-            var devices = Engine.Instance().GetDevices();
-
-            var items = new ObservableCollection<SelectableDeviceViewModel>();
-
-            foreach (var device in devices)
-            {
-                items.Add(new SelectableDeviceViewModel { Model = device.Model, Serial = device.Serial });
-                Console.WriteLine($@"{device.Model}({device.Serial})");
-            }
-
-            _windowManager.ShowDialog(new DeviceViewModel(items));
+            var deviceList = new List<DeviceData>();
+            _windowManager.ShowDialog(new DeviceViewModel(ref deviceList, false));
         }
 
         public void OnLoaded()
         {
-            return;
             Engine.Instance().StartServer();
-            var devices = Engine.Instance().GetDevices();
-            var items = new ObservableCollection<SelectableDeviceViewModel>();
-
-            foreach (var device in devices)
-            {
-                items.Add(new SelectableDeviceViewModel { Model = device.Model, Serial = device.Serial });
-                Console.WriteLine($@"{device.Model}({device.Serial})");
-            }
-            var monitor = Engine.Instance().StartMonitor();
-
-            _windowManager.ShowDialog(new DeviceViewModel(items));
+            return;
         }
 
         void OnDeviceConnected(object sender, DeviceDataEventArgs e)

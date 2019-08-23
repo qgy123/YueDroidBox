@@ -1,0 +1,17 @@
+﻿<mah:MetroWindow x:Class="YueDroidBox.View.SubWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:YueDroidBox.View"
+        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d"
+        Title="SubWindow" Height="450" Width="800">
+    <dragablz:TabablzControl Margin="1" x:Name="InitialTabablzControl" HeaderMemberPath="Header">
+        <dragablz:TabablzControl.InterTabController>
+            <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
+        </dragablz:TabablzControl.InterTabController>
+    </dragablz:TabablzControl>
+
+</mah:MetroWindow>

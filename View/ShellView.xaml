@@ -1,0 +1,103 @@
+﻿<controls:MetroWindow x:Class="YueDroidBox.View.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:YueDroidBox.View"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="ShellView" Height="450" Width="800"
+        xmlns:s="https://github.com/canton7/Stylet"
+        xmlns:viewModel="clr-namespace:YueDroidBox.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+        xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
+        d:DataContext="{d:DesignInstance viewModel:ShellViewModel}"
+        BorderThickness="0"
+        GlowBrush="Black"
+        TitleAlignment="Center"
+        Loaded="{s:Action OnLoaded}">
+
+    <!--<mah:MetroWindow.Resources>
+        <dragablz:InterTabController x:Key="InterTabController" x:Shared="False" InterTabClient="{x:Static viewModel:ShellViewModel.InterTabClient}" />
+
+        <Style TargetType="dragablz:TabablzControl" BasedOn="{StaticResource {x:Type dragablz:TabablzControl}}">
+            <Setter Property="InterTabController" Value="{StaticResource InterTabController}" />
+        </Style>
+    </mah:MetroWindow.Resources>-->
+
+    <!--<controls:MetroWindow.Resources>
+        <Style TargetType="{x:Type dragablz:TabablzControl}" x:Key="TabStyle">
+            <Setter Property="Margin" Value="8 8 8 8" />
+        </Style>
+    </controls:MetroWindow.Resources>-->
+
+    <controls:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <DockPanel>
+                <Image Source="../Resource/icon.ico"></Image>
+                <TextBlock Margin="3, 0"  VerticalAlignment="Center" Text="{Binding}" />
+            </DockPanel>
+        </DataTemplate>
+    </controls:MetroWindow.TitleTemplate>
+
+    <controls:MetroWindow.LeftWindowCommands>
+        <controls:WindowCommands>
+            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
+                          MaxWidth="28"
+                          MaxHeight="28"
+                          x:Name="MenuToggleButton"/>
+        </controls:WindowCommands>
+    </controls:MetroWindow.LeftWindowCommands>
+
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <materialDesign:PopupBox Style="{StaticResource WindowCommandsPopupBoxStyle}">
+                <StackPanel>
+                    <Button Content="Select Device" Click="{s:Action SelectDevice}"/>
+                    <Button Content="About" Click="{s:Action About}"/>
+                </StackPanel>
+            </materialDesign:PopupBox>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+
+    <Grid>
+        <!--dockablz:Layout IsTabStop="False" Focusable="False"-->
+        <dragablz:TabablzControl ItemsSource="{Binding TabContents}" x:Name="InitialTabablzControl" HeaderMemberPath="Header" EmptyHeaderSizingHint="PreviousTab">
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
+                </dragablz:TabablzControl.InterTabController>
+            </dragablz:TabablzControl>
+        <!--/dockablz:Layout-->
+        <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+            <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+                <materialDesign:DrawerHost.LeftDrawerContent>
+                    <DockPanel MinWidth="240">
+                        <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="24" Mode="PrimaryMid" DockPanel.Dock="Top">
+                            <DockPanel>
+                                <materialDesign:PackIcon MinWidth="38" MinHeight="38" HorizontalAlignment="Center" VerticalAlignment="Center" Kind="Android" />
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18">
+                                ToolBox
+                                </TextBlock>
+                            </DockPanel>
+                        </materialDesign:ColorZone>
+                        <ListBox x:Name="MenuItemsListBox" Margin="0 16 0 16" SelectedIndex="0"                         
+                             ItemsSource="{Binding MenuItems}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="viewModel:MenuItemViewModel">
+                                    <TextBlock Text="{Binding Name}" Margin="32 0 32 0" PreviewMouseDown="{s:Action OpenTab}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                    </DockPanel>
+                </materialDesign:DrawerHost.LeftDrawerContent>
+
+            </materialDesign:DrawerHost>
+        </materialDesign:DialogHost>
+
+        <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar"/>
+
+    </Grid>
+
+</controls:MetroWindow>

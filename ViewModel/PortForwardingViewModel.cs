@@ -16,8 +16,8 @@ namespace YueDroidBox.ViewModel
 
         public void SelectDevice()
         {
-            var deviceList = new List<DeviceData>();
-            _windowManager.ShowDialog(new DeviceViewModel(ref deviceList, true));
+            //var deviceList = new List<DeviceData>();
+            //_windowManager.ShowDialog(new DeviceViewModel(ref deviceList, true));
         }
     }
 }

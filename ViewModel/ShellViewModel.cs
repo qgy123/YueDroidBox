@@ -22,14 +22,16 @@ namespace YueDroidBox.ViewModel
 
         private readonly IWindowManager _windowManager;
         private readonly IViewManager _viewManager;
+        private readonly DeviceViewModel _deviceViewModel;
         private readonly PortForwardingViewModel _portForwardingViewModel;
 
-        public ShellViewModel(IWindowManager windowManager, IViewManager viewManager,
+        public ShellViewModel(IWindowManager windowManager, IViewManager viewManager, DeviceViewModel deviceViewModel,
             PortForwardingViewModel portForwardingViewModel)
         {
             this.DisplayName = "YueDroidBox";
             _windowManager = windowManager;
             _viewManager = viewManager;
+            _deviceViewModel = deviceViewModel;
             _portForwardingViewModel = portForwardingViewModel;
 
             InterTabClient = new CustomTabClient();
@@ -40,23 +42,6 @@ namespace YueDroidBox.ViewModel
             };
         }
 
-        //public void OpenTab(object sender, MouseButtonEventArgs e)
-        //{
-
-        //    if (e.OriginalSource is TextBlock t)
-        //    {
-        //        var context = t.DataContext;
-
-        //        if (context != null && context is MenuItemViewModel m)
-        //        {
-        //            var s = m.Content as Screen;
-        //            var view = _viewManager.CreateViewForModel(s);
-        //            TabContents.Add(new TabContent(s.DisplayName, view));
-        //        }
-        //    }
-
-        //}
-        
         public void OpenTab(object menuItemViewModel)
         {
             var s = menuItemViewModel as Screen;
@@ -66,8 +51,8 @@ namespace YueDroidBox.ViewModel
 
         public void SelectDevice()
         {
-            var deviceList = new List<DeviceData>();
-            _windowManager.ShowDialog(new DeviceViewModel(ref deviceList, false));
+            //var deviceList = new List<DeviceData>();
+            _windowManager.ShowDialog(_deviceViewModel);
         }
 
         public void OnLoaded()

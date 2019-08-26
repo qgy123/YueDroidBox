@@ -16,6 +16,7 @@
         BorderThickness="0"
         GlowBrush="Black"
         TitleAlignment="Center"
+        Background="{DynamicResource MaterialDesignPaper}"
         Loaded="{s:Action OnLoaded}">
 
     <!--<mah:MetroWindow.Resources>
@@ -35,7 +36,7 @@
     <controls:MetroWindow.TitleTemplate>
         <DataTemplate>
             <DockPanel>
-                <Image Source="../Resource/icon.ico"></Image>
+                <Image Source="../Resource/icon.ico"/>
                 <TextBlock Margin="3, 0"  VerticalAlignment="Center" Text="{Binding}" />
             </DockPanel>
         </DataTemplate>

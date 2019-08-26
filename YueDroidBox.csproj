@@ -135,7 +135,9 @@
     <Compile Include="Core\Adb\Receiver\PortForwardingReceiver.cs" />
     <Compile Include="Model\Adb\ForwardingInfo.cs" />
     <Compile Include="Util\CustomTabClient.cs" />
+    <Compile Include="ViewModel\SingleSelectDeviceViewModel.cs" />
     <Compile Include="ViewModel\TabContent.cs" />
+    <Compile Include="ViewModel\WaitingDialogViewModel.cs" />
     <Compile Include="View\NewSubWindow.xaml.cs">
       <DependentUpon>NewSubWindow.xaml</DependentUpon>
     </Compile>
@@ -189,6 +191,10 @@
     <Page Include="View\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\WaitingDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup />

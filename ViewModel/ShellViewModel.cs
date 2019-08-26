@@ -44,6 +44,7 @@ namespace YueDroidBox.ViewModel
 
         public void OpenTab(object menuItemViewModel)
         {
+            //Todo: check if it was different viewmodel
             var s = menuItemViewModel as Screen;
             var view = _viewManager.CreateViewForModel(s);
             TabContents.Add(new TabContent(s.DisplayName, view));
@@ -52,13 +53,13 @@ namespace YueDroidBox.ViewModel
         public void SelectDevice()
         {
             //var deviceList = new List<DeviceData>();
+            _deviceViewModel.ToggleSingleSelectionMode();
             _windowManager.ShowDialog(_deviceViewModel);
         }
 
         public void OnLoaded()
         {
             Engine.Instance().StartServer();
-            return;
         }
 
         void OnDeviceConnected(object sender, DeviceDataEventArgs e)

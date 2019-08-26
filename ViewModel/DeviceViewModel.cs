@@ -29,7 +29,6 @@ namespace YueDroidBox.ViewModel
         {
             _viewManager = viewManager;
             _waitingDialogViewModel = waitingDialogViewModel;
-
             this.DisplayName = "select devices";
         }
 
@@ -47,6 +46,7 @@ namespace YueDroidBox.ViewModel
 
         public void ToggleSingleSelectionMode()
         {
+            this.DisplayName = "select device";
             CurVisibility = false;
             ConfirmHeight = 0;
             CurRow = 0;

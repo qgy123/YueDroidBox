@@ -40,21 +40,28 @@ namespace YueDroidBox.ViewModel
             };
         }
 
-        public void OpenTab(object sender, MouseButtonEventArgs e)
+        //public void OpenTab(object sender, MouseButtonEventArgs e)
+        //{
+
+        //    if (e.OriginalSource is TextBlock t)
+        //    {
+        //        var context = t.DataContext;
+
+        //        if (context != null && context is MenuItemViewModel m)
+        //        {
+        //            var s = m.Content as Screen;
+        //            var view = _viewManager.CreateViewForModel(s);
+        //            TabContents.Add(new TabContent(s.DisplayName, view));
+        //        }
+        //    }
+
+        //}
+        
+        public void OpenTab(object menuItemViewModel)
         {
-
-            if (e.OriginalSource is TextBlock t)
-            {
-                var context = t.DataContext;
-
-                if (context != null && context is MenuItemViewModel m)
-                {
-                    var s = m.Content as Screen;
-                    var view = _viewManager.CreateViewForModel(s);
-                    TabContents.Add(new TabContent(s.DisplayName, view));
-                }
-            }
-
+            var s = menuItemViewModel as Screen;
+            var view = _viewManager.CreateViewForModel(s);
+            TabContents.Add(new TabContent(s.DisplayName, view));
         }
 
         public void SelectDevice()

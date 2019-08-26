@@ -11,6 +11,7 @@
         xmlns:viewModel="clr-namespace:YueDroidBox.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         d:DataContext="{d:DesignInstance viewModel:ShellViewModel}"
         BorderThickness="0"
         GlowBrush="Black"
@@ -63,10 +64,10 @@
     <Grid>
         <!--dockablz:Layout IsTabStop="False" Focusable="False"-->
         <dragablz:TabablzControl ItemsSource="{Binding TabContents}" x:Name="InitialTabablzControl" HeaderMemberPath="Header" EmptyHeaderSizingHint="PreviousTab">
-                <dragablz:TabablzControl.InterTabController>
-                    <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
-                </dragablz:TabablzControl.InterTabController>
-            </dragablz:TabablzControl>
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
+            </dragablz:TabablzControl.InterTabController>
+        </dragablz:TabablzControl>
         <!--/dockablz:Layout-->
         <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
             <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
@@ -80,14 +81,21 @@
                                 </TextBlock>
                             </DockPanel>
                         </materialDesign:ColorZone>
-                        <ListBox x:Name="MenuItemsListBox" Margin="0 16 0 16" SelectedIndex="0"                         
+                        <ItemsControl x:Name="MenuItemsListBox" Margin="0 16 0 16"
                              ItemsSource="{Binding MenuItems}">
-                            <ListBox.ItemTemplate>
+                            <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="viewModel:MenuItemViewModel">
-                                    <TextBlock Text="{Binding Name}" Margin="32 0 32 0" PreviewMouseDown="{s:Action OpenTab}"/>
+                                    <ListBoxItem x:Name="Border" Padding="8">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{s:Action OpenTab}" CommandParameter="{Binding Content}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <TextBlock Text="{Binding Name}" Margin="32 0 32 0"/>
+                                    </ListBoxItem>
                                 </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
                     </DockPanel>
                 </materialDesign:DrawerHost.LeftDrawerContent>

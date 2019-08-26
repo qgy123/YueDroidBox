@@ -61,6 +61,11 @@ namespace YueDroidBox.ViewModel
             }
         }
 
+        public void OnClick(string argument)
+        {
+            Console.WriteLine($@"Argument is {argument}");
+        }
+
         public void OnRefresh()
         {
             RefreshDevices();

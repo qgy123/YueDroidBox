@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:s="https://github.com/canton7/Stylet"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:local="clr-namespace:YueDroidBox.View"
       xmlns:viewModel="clr-namespace:YueDroidBox.ViewModel"
       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
@@ -49,9 +50,14 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type viewModel:SelectableDeviceViewModel}">
                     <ListBoxItem x:Name="Border" Padding="8">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{s:Action OnClick}" CommandParameter="{Binding Serial}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="Checkerz" />
+                                <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <CheckBox 

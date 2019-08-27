@@ -55,6 +55,12 @@ namespace YueDroidBox.ViewModel
             //var deviceList = new List<DeviceData>();
             //_deviceViewModel.ToggleSingleSelectionMode();
             _windowManager.ShowDialog(_deviceViewModel);
+            Console.WriteLine(@"Selected devices:");
+
+            foreach (var data in _deviceViewModel.GetSelectedDevice())
+            {
+                Console.WriteLine($"{data.Model}");
+            }
         }
 
         public void OnLoaded()

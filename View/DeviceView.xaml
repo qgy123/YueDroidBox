@@ -53,7 +53,7 @@
                         <ListBoxItem x:Name="Border" Padding="8">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseDown">
-                                    <i:InvokeCommandAction Command="{s:Action OnClick}" CommandParameter="{Binding Serial}"/>
+                                    <i:InvokeCommandAction Command="{s:Action OnClick}" CommandParameter="{Binding DeviceData}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <Grid>
@@ -68,8 +68,8 @@
                                     IsChecked="{Binding IsSelected}"/>
                                 <StackPanel Margin="8 0 0 0" 
                                         Grid.Column="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}, AncestorLevel=1}, Path=DataContext.CurRow}">
-                                    <TextBlock FontWeight="Bold" Text="{Binding Model}" />
-                                    <TextBlock Text="{Binding Serial}" />
+                                    <TextBlock FontWeight="Bold" Text="{Binding DeviceData.Model}" />
+                                    <TextBlock Text="{Binding DeviceData.Serial}" />
                                 </StackPanel>
                             </Grid>
                         </ListBoxItem>

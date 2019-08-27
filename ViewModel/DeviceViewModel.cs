@@ -14,15 +14,15 @@ namespace YueDroidBox.ViewModel
     public class DeviceViewModel : Screen
     {
         // public event PropertyChangedEventHandler PropertyChanged;
-        // Therefore you do not need to do anything special in order to use Fody.PropertyChanged with any subclass of Screen, ValidatingModelBase, or PropertyChangedBase.
+        // Therefore you do not need to do anything special in order to use Fody.PropertyChanged with any subclass of Screen,      ValidatingModelBase, or PropertyChangedBase.
 
         private readonly IViewManager _viewManager;
         private readonly WaitingDialogViewModel _waitingDialogViewModel;
         private readonly List<DeviceData> _selectedDevices;
 
-        public bool IsDialogOpen { get; set; }
-
         public ObservableCollection<SelectableDeviceViewModel> Items { get; set; }
+        private bool _singleSelection = false;
+
         public bool CurVisibility { get; set; } = true;
         public int ConfirmHeight { get; set; } = 35;
         public int CurRow { get; set; } = 1;
@@ -30,6 +30,8 @@ namespace YueDroidBox.ViewModel
         private Task<bool> _deviceTask;
 
         private bool _selectAll = false;
+
+        private List<DeviceData> _selectedDevice = new List<DeviceData>();
 
         public DeviceViewModel(IViewManager viewManager, WaitingDialogViewModel waitingDialogViewModel)
         {
@@ -53,6 +55,7 @@ namespace YueDroidBox.ViewModel
         public void ToggleSingleSelectionMode()
         {
             this.DisplayName = "select device";
+            _singleSelection = true;
             CurVisibility = false;
             ConfirmHeight = 0;
             CurRow = 0;
@@ -84,22 +87,18 @@ namespace YueDroidBox.ViewModel
         {
             return Engine.Instance().GetDevices();
 
-            //await Execute.PostToUIThreadAsync(() =>
-            //{
-
-            //    Items = new ObservableCollection<SelectableDeviceViewModel>();
-
-            //    foreach (var device in devices)
-            //    {
-            //        Items.Add(new SelectableDeviceViewModel { Model = device.Model, Serial = device.Serial });
-            //        Console.WriteLine($@"{device.Model}({device.Serial})");
-            //    }
-            //});
         }
 
-        public void OnClick(string argument)
+        public void OnClick(DeviceData deviceData)
         {
-            Console.WriteLine($@"Argument is {argument}");
+            if (!_singleSelection) return;
+
+            if (Items == null) return;
+
+            _selectedDevice.Clear();
+            _selectedDevice.Add(deviceData);
+
+            this.RequestClose();
         }
 
         public override Task<bool> CanCloseAsync()
@@ -126,7 +125,7 @@ namespace YueDroidBox.ViewModel
 
                             foreach (var device in devices)
                             {
-                                Items.Add(new SelectableDeviceViewModel { Model = device.Model, Serial = device.Serial });
+                                Items.Add(new SelectableDeviceViewModel { DeviceData = device });
                                 Console.WriteLine($@"{device.Model}({device.Serial})");
                             }
 
@@ -142,8 +141,25 @@ namespace YueDroidBox.ViewModel
 
         public void OnConfirm()
         {
+            if (Items == null) return;
+
+            _selectedDevice.Clear();
+
+            foreach (var model in Items)
+            {
+                if (model.IsSelected)
+                {
+                    _selectedDevice.Add(model.DeviceData);
+                }
+            }
+
+            this.RequestClose();
 
         }
 
+        public List<DeviceData> GetSelectedDevice()
+        {
+            return _selectedDevice;
+        }
     }
 }

@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:s="https://github.com/canton7/Stylet"
              xmlns:local="clr-namespace:YueDroidBox.View"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
+             xmlns:viewModel="clr-namespace:YueDroidBox.ViewModel"
+             mc:Ignorable="d"         
+             d:DataContext="{d:DesignInstance viewModel:PortForwardingViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <DockPanel Grid.ColumnSpan="2">
@@ -21,7 +24,8 @@
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
                         HorizontalAlignment="Right"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                        Click="{s:Action SelectDevice}">
                         <materialDesign:PackIcon
                             Kind="MobilePhoneAndroid"
                             Height="24"
@@ -33,13 +37,21 @@
                                    HorizontalAlignment="Right">
                             Current Device:
                         </TextBlock>
+                        <StackPanel>
+                            <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Right"
+                                       Text="{Binding CurrentDeviceData.Model}"
+                                       MinWidth="150"
+                                       Margin="20 0"/>
+                            <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Right"
+                                       Text="{Binding CurrentDeviceData.Serial}"
+                                       MinWidth="150"
+                                       Margin="20 0"/>
+                        </StackPanel>
 
-                        <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}" 
-                                   VerticalAlignment="Center" 
-                                   HorizontalAlignment="Right"
-                                   Text="{Binding CurrentDevice}"
-                                   MinWidth="150"
-                                   Margin="20 0"/>
 
                     </StackPanel>
 
@@ -106,7 +118,7 @@
             <GroupBox Margin="2 5 0 0"
                       Header="Fast Forwarding">
                 <Grid>
-                    <ListView ItemsSource="{Binding Items1}">
+                    <ListView ItemsSource="{Binding Items2}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn

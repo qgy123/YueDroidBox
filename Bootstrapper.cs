@@ -9,7 +9,6 @@ namespace YueDroidBox
     {
         protected override void OnStart()
         {
-            base.OnStart();
             Stylet.Logging.LogManager.Enabled = true;
         }
 

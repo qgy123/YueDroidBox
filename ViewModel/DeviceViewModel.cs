@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using MaterialDesignThemes.Wpf;
@@ -12,6 +13,9 @@ namespace YueDroidBox.ViewModel
 {
     public class DeviceViewModel : Screen
     {
+        // public event PropertyChangedEventHandler PropertyChanged;
+        // Therefore you do not need to do anything special in order to use Fody.PropertyChanged with any subclass of Screen, ValidatingModelBase, or PropertyChangedBase.
+
         private readonly IViewManager _viewManager;
         private readonly WaitingDialogViewModel _waitingDialogViewModel;
         private readonly List<DeviceData> _selectedDevices;
@@ -24,6 +28,8 @@ namespace YueDroidBox.ViewModel
         public int CurRow { get; set; } = 1;
 
         private Task<bool> _deviceTask;
+
+        private bool _selectAll = false;
 
         public DeviceViewModel(IViewManager viewManager, WaitingDialogViewModel waitingDialogViewModel)
         {
@@ -52,6 +58,11 @@ namespace YueDroidBox.ViewModel
             CurRow = 0;
         }
 
+        protected override void OnViewLoaded()
+        {
+            Execute.PostToUIThreadAsync(OnRefresh);
+        }
+
         public static void SelectAll(bool select, IEnumerable<SelectableDeviceViewModel> models)
         {
             if (models == null) return;
@@ -60,11 +71,13 @@ namespace YueDroidBox.ViewModel
             {
                 model.IsSelected = select;
             }
+
         }
 
         public void OnSelectAll()
         {
-            SelectAll(true, Items);
+            _selectAll = !_selectAll;
+            SelectAll(_selectAll, Items);
         }
 
         public List<DeviceData> GetDevices()

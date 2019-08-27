@@ -53,7 +53,7 @@ namespace YueDroidBox.ViewModel
         public void SelectDevice()
         {
             //var deviceList = new List<DeviceData>();
-            _deviceViewModel.ToggleSingleSelectionMode();
+            //_deviceViewModel.ToggleSingleSelectionMode();
             _windowManager.ShowDialog(_deviceViewModel);
         }
 

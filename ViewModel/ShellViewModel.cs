@@ -47,6 +47,7 @@ namespace YueDroidBox.ViewModel
             //Todo: check if it was different viewmodel
             var s = menuItemViewModel as Screen;
             var view = _viewManager.CreateViewForModel(s);
+            _viewManager.BindViewToModel(view, s);
             TabContents.Add(new TabContent(s.DisplayName, view));
         }
 

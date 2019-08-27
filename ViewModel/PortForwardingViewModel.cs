@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using SharpAdbClient;
 using Stylet;
@@ -10,6 +11,7 @@ namespace YueDroidBox.ViewModel
     public class PortForwardingViewModel : Screen
     {
         public DeviceData CurrentDeviceData { get; set; }
+        public ObservableCollection<ForwardData> ForwardItem { get; set; }
 
         private readonly IWindowManager _windowManager;
         private readonly IViewManager _viewManager;
@@ -31,11 +33,21 @@ namespace YueDroidBox.ViewModel
         public void Init()
         {
             GetDefaultDevice();
+            GetPortForwardingInfo();
         }
 
         private void GetDefaultDevice()
         {
             CurrentDeviceData = Engine.Instance().GetDevices().First();
+        }
+
+        public void GetPortForwardingInfo()
+        {
+            if (CurrentDeviceData == null) return;
+
+            IEnumerable<ForwardData> forwardList = AdbClient.Instance.ListForward(CurrentDeviceData);
+            ForwardItem = new ObservableCollection<ForwardData>(forwardList);
+
         }
 
         public void SelectDevice()
@@ -45,7 +57,11 @@ namespace YueDroidBox.ViewModel
             var view = _viewManager.CreateViewForModel(_deviceViewModel);
             _viewManager.BindViewToModel(view, _deviceViewModel);
             _windowManager.ShowDialog(_deviceViewModel);
-            CurrentDeviceData = _deviceViewModel.GetSelectedDevice()[0];
+
+            var device = _deviceViewModel.GetSelectedDevice();
+
+            CurrentDeviceData = device.Count == 0 ? null : _deviceViewModel.GetSelectedDevice()[0];
+            GetPortForwardingInfo();
         }
     }
 }

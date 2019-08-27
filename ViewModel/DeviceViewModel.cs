@@ -63,6 +63,7 @@ namespace YueDroidBox.ViewModel
 
         protected override void OnViewLoaded()
         {
+            _selectedDevice.Clear();
             Execute.PostToUIThreadAsync(OnRefresh);
         }
 

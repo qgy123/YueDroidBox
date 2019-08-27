@@ -21,6 +21,7 @@
                 Height="60">
                 <DockPanel Dock="Right">
                     <Button
+                        Margin="5 0"
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
                         HorizontalAlignment="Right"
@@ -31,7 +32,10 @@
                             Height="24"
                             Width="24" />
                     </Button>
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <StackPanel DockPanel.Dock="Right" 
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Right">
                         <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}" 
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Right">
@@ -69,17 +73,17 @@
             <GroupBox Margin="0 5 2 0"
                       Header="Forwarding List">
                 <Grid>
-                    <ListView ItemsSource="{Binding Items1}">
+                    <ListView ItemsSource="{Binding ForwardItem}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn
-                                    DisplayMemberBinding="{Binding Serial}"
+                                    DisplayMemberBinding="{Binding SerialNumber}"
                                     Header="Serial" />
                                 <GridViewColumn
-                                    DisplayMemberBinding="{Binding LocalPort}"
+                                    DisplayMemberBinding="{Binding Local}"
                                     Header="LocalPort" />
                                 <GridViewColumn
-                                    DisplayMemberBinding="{Binding DevicePort}"
+                                    DisplayMemberBinding="{Binding Remote}"
                                     Header="DevicePort" />
                             </GridView>
                         </ListView.View>

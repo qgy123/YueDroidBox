@@ -17,6 +17,8 @@ namespace YueDroidBox
         {
             // Configure the IoC container in here
             base.ConfigureIoC(builder);
+
+            builder.Bind<ShellViewModel.IViewModelFactory>().ToAbstractFactory();
         }
 
         protected override void Configure()

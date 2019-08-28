@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:YueDroidBox.View"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="ShellView" Height="450" Width="800"
         xmlns:s="https://github.com/canton7/Stylet"
         xmlns:viewModel="clr-namespace:YueDroidBox.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -17,7 +16,8 @@
         GlowBrush="Black"
         TitleAlignment="Center"
         Background="{DynamicResource MaterialDesignPaper}"
-        Loaded="{s:Action OnLoaded}">
+        Loaded="{s:Action OnLoaded}"
+        Title="{Binding DisplayName}" Height="450" Width="800">
 
     <!--<mah:MetroWindow.Resources>
         <dragablz:InterTabController x:Key="InterTabController" x:Shared="False" InterTabClient="{x:Static viewModel:ShellViewModel.InterTabClient}" />

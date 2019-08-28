@@ -14,7 +14,7 @@ using YueDroidBox.Util;
 
 namespace YueDroidBox.ViewModel
 {
-    public class ShellViewModel : Screen
+    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public MenuItemViewModel[] MenuItems { get; }
         public ObservableCollection<TabContent> TabContents { get; set; } = new ObservableCollection<TabContent>();
@@ -22,31 +22,35 @@ namespace YueDroidBox.ViewModel
 
         private readonly IWindowManager _windowManager;
         private readonly IViewManager _viewManager;
-        private readonly DeviceViewModel _deviceViewModel;
-        private readonly PortForwardingViewModel _portForwardingViewModel;
 
-        public ShellViewModel(IWindowManager windowManager, IViewManager viewManager, DeviceViewModel deviceViewModel,
-            PortForwardingViewModel portForwardingViewModel)
+        private readonly IViewModelFactory _viewModelFactory;
+        private readonly DeviceViewModel _deviceViewModel;
+        //private readonly PortForwardingViewModel _portForwardingViewModel;
+
+        public ShellViewModel(IWindowManager windowManager, IViewManager viewManager,
+            IViewModelFactory viewModelFactory)
         {
             this.DisplayName = "YueDroidBox";
             _windowManager = windowManager;
             _viewManager = viewManager;
-            _deviceViewModel = deviceViewModel;
-            _portForwardingViewModel = portForwardingViewModel;
-
-            InterTabClient = new CustomTabClient();
-            //InterTabClient = new InterTabClient();
+            //_deviceViewModel = deviceViewModel;
+            _viewModelFactory = viewModelFactory;
+            //_portForwardingViewModel = portForwardingViewModel;
+            _deviceViewModel = viewModelFactory.CreateDeviceViewModel();
+            //InterTabClient = new CustomTabClient();
+            InterTabClient = new InterTabClient();
 
             MenuItems = new[]
             {
-                new MenuItemViewModel("Port Forwarding", _portForwardingViewModel),
+                new MenuItemViewModel("Port Forwarding", _viewModelFactory.CreatePortForwardingViewModelViewModel()),
             };
         }
 
         public void OpenTab(object menuItemViewModel)
         {
-            //Todo: check if it was different viewmodel
-            var s = menuItemViewModel as Screen;
+            // Todo: check if it was different viewmodel
+            //var s = menuItemViewModel as Screen;
+            var s = _viewModelFactory.CreatePortForwardingViewModelViewModel(); // Todo: for testing
             var view = _viewManager.CreateViewForModel(s);
             _viewManager.BindViewToModel(view, s);
             TabContents.Add(new TabContent(s.DisplayName, view));
@@ -73,6 +77,12 @@ namespace YueDroidBox.ViewModel
         void OnDeviceConnected(object sender, DeviceDataEventArgs e)
         {
             Console.WriteLine($@"The device {e.Device.Name} has connected to this PC");
+        }
+
+        public interface IViewModelFactory
+        {
+            DeviceViewModel CreateDeviceViewModel();
+            PortForwardingViewModel CreatePortForwardingViewModelViewModel();
         }
     }
 }

@@ -101,10 +101,11 @@
                                 Height="24" />
                         </materialDesign:PopupBox.ToggleCheckedContent>
                         <StackPanel>
-                            <Button ToolTip="Refresh">
+                            <Button ToolTip="Refresh" Command="{s:Action OnRefresh}">
                                 <materialDesign:PackIcon Kind="Refresh" />
                             </Button>
                             <Button ToolTip="Add">
+                                <!--Command="{s:Action OnCreatePF}">-->
                                 <materialDesign:PackIcon Kind="Add" />
                             </Button>
                             <Button ToolTip="Remove">

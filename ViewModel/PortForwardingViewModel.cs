@@ -50,6 +50,15 @@ namespace YueDroidBox.ViewModel
 
         }
 
+        public void OnRefresh() => GetPortForwardingInfo();
+
+        public void OnCreatePF()
+        {
+            if (CurrentDeviceData == null) return;
+
+            //AdbClient.Instance.CreateForward();
+        }
+
         public void SelectDevice()
         {
 

@@ -133,8 +133,10 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Core\Adb\Extensions\DeviceExtension.cs" />
     <Compile Include="Core\Adb\Receiver\PortForwardingReceiver.cs" />
+    <Compile Include="Core\IoC.cs" />
     <Compile Include="Model\Adb\ForwardingInfo.cs" />
     <Compile Include="Util\CustomTabClient.cs" />
+    <Compile Include="Util\InterTabClient.cs" />
     <Compile Include="ViewModel\TabContent.cs" />
     <Compile Include="ViewModel\WaitingDialogViewModel.cs" />
     <Compile Include="View\NewSubWindow.xaml.cs">

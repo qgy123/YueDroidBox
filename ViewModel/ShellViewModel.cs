@@ -35,6 +35,7 @@ namespace YueDroidBox.ViewModel
             _portForwardingViewModel = portForwardingViewModel;
 
             InterTabClient = new CustomTabClient();
+            //InterTabClient = new InterTabClient();
 
             MenuItems = new[]
             {

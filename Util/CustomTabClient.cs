@@ -18,6 +18,7 @@ namespace YueDroidBox.Util
         public override INewTabHost<Window> GetNewHost(IInterTabClient interTabClient, object partition, TabablzControl source)
         {
             var window = new NewSubWindow();
+            //window.InitializeComponent();
             window.TabablzControl.Items.Clear();
             return new NewTabHost<Window>(window, window.TabablzControl);
 

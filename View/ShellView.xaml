@@ -64,7 +64,7 @@
 
     <Grid>
         <!--dockablz:Layout IsTabStop="False" Focusable="False"-->
-        <dragablz:TabablzControl ItemsSource="{Binding TabContents}" x:Name="InitialTabablzControl" HeaderMemberPath="Header" EmptyHeaderSizingHint="PreviousTab">
+        <dragablz:TabablzControl x:Name="MainTab" ItemsSource="{Binding TabContents}" HeaderMemberPath="Header" EmptyHeaderSizingHint="PreviousTab">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
             </dragablz:TabablzControl.InterTabController>

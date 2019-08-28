@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using Stylet;
 
 namespace YueDroidBox.ViewModel
 {
@@ -14,9 +15,9 @@ namespace YueDroidBox.ViewModel
         public ScrollBarVisibility VerticalScrollBarVisibilityRequirement { get; set; }
         public Thickness MarginRequirement { get; set; } = new Thickness(16);
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        public MenuItemViewModel(string name, object content)
+        public MenuItemViewModel(string name, Func<Screen> content)
         {
             Name = name;
             Content = content;

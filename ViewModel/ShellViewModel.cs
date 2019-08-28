@@ -14,7 +14,7 @@ using YueDroidBox.Util;
 
 namespace YueDroidBox.ViewModel
 {
-    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive
+    public class ShellViewModel : Screen
     {
         public MenuItemViewModel[] MenuItems { get; }
         public ObservableCollection<TabContent> TabContents { get; set; } = new ObservableCollection<TabContent>();
@@ -42,15 +42,16 @@ namespace YueDroidBox.ViewModel
 
             MenuItems = new[]
             {
-                new MenuItemViewModel("Port Forwarding", _viewModelFactory.CreatePortForwardingViewModelViewModel()),
+                new MenuItemViewModel("Port Forwarding", _viewModelFactory.CreatePortForwardingViewModelViewModel),
             };
         }
 
-        public void OpenTab(object menuItemViewModel)
+        public void OpenTab(Func<Screen> content)
         {
-            // Todo: check if it was different viewmodel
+            // Todo: content can be factory or viewmodel
             //var s = menuItemViewModel as Screen;
-            var s = _viewModelFactory.CreatePortForwardingViewModelViewModel(); // Todo: for testing
+            //var s = _viewModelFactory.CreatePortForwardingViewModelViewModel(); // Todo: for testing
+            var s = content.Invoke();
             var view = _viewManager.CreateViewForModel(s);
             _viewManager.BindViewToModel(view, s);
             TabContents.Add(new TabContent(s.DisplayName, view));

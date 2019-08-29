@@ -7,165 +7,171 @@
              xmlns:local="clr-namespace:YueDroidBox.View"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:viewModel="clr-namespace:YueDroidBox.ViewModel"
-             mc:Ignorable="d"         
+             mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModel:PortForwardingViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <DockPanel Grid.ColumnSpan="2">
-            <materialDesign:ColorZone
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+
+    <DockPanel>
+        <materialDesign:DialogHost IsOpen="{Binding IsDialogOpen}"
+                                       DialogContent="{Binding DialogContent}"
+                                       CloseOnClickAway="True"
+                               
+            >
+            <DockPanel>
+                <materialDesign:ColorZone
                 DockPanel.Dock="Top"
                 Mode="PrimaryMid"
                 Padding="10"
                 CornerRadius="3"
                 materialDesign:ShadowAssist.ShadowDepth="Depth3"
                 Height="60">
-                <DockPanel Dock="Right">
-                    <Button
+                    <DockPanel Dock="Right">
+                        <Button
                         Margin="5 0"
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
                         HorizontalAlignment="Right"
                         materialDesign:ShadowAssist.ShadowDepth="Depth3"
                         Click="{s:Action SelectDevice}">
-                        <materialDesign:PackIcon
+                            <materialDesign:PackIcon
                             Kind="MobilePhoneAndroid"
                             Height="24"
                             Width="24" />
-                    </Button>
-                    <StackPanel DockPanel.Dock="Right" 
+                        </Button>
+                        <StackPanel DockPanel.Dock="Right" 
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center" 
                                 HorizontalAlignment="Right">
-                        <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}" 
+                            <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}" 
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Right">
                             Current Device:
-                        </TextBlock>
-                        <StackPanel>
-                            <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}"
+                            </TextBlock>
+                            <StackPanel>
+                                <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}"
                                        VerticalAlignment="Center" 
                                        HorizontalAlignment="Right"
                                        Text="{Binding CurrentDeviceData.Model}"
                                        MinWidth="150"
                                        Margin="20 0"/>
-                            <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}" 
+                                <TextBlock Foreground="{StaticResource AccentSelectedColorBrush}" 
                                        VerticalAlignment="Center" 
                                        HorizontalAlignment="Right"
                                        Text="{Binding CurrentDeviceData.Serial}"
                                        MinWidth="150"
                                        Margin="20 0"/>
+                            </StackPanel>
+
+
                         </StackPanel>
 
 
-                    </StackPanel>
-
-
-                    <TextBlock Style="{StaticResource MaterialDesignButtonTextBlock}"
+                        <TextBlock Style="{StaticResource MaterialDesignButtonTextBlock}"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center">
                         To start port forwarding, select a single device first!
-                    </TextBlock>
+                        </TextBlock>
 
 
-                </DockPanel>
-            </materialDesign:ColorZone>
+                    </DockPanel>
+                </materialDesign:ColorZone>
 
-            <GroupBox Margin="0 5 2 0"
+                <GroupBox Margin="0 5 2 0"
                       Header="Forwarding List">
-                <Grid>
-                    <ListView ItemsSource="{Binding ForwardItem}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn
+                    <Grid>
+                        <ListView ItemsSource="{Binding ForwardItem}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn
                                     DisplayMemberBinding="{Binding SerialNumber}"
                                     Header="Serial" />
-                                <GridViewColumn
+                                    <GridViewColumn
                                     DisplayMemberBinding="{Binding Local}"
                                     Header="LocalPort" />
-                                <GridViewColumn
+                                    <GridViewColumn
                                     DisplayMemberBinding="{Binding Remote}"
                                     Header="DevicePort" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <materialDesign:PopupBox
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <materialDesign:PopupBox
                         Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
                         PlacementMode="TopAndAlignCentres"
                         ToggleCheckedContentCommandParameter="wowsers">
-                        <materialDesign:PopupBox.ToggleCheckedContent>
-                            <materialDesign:PackIcon
+                            <materialDesign:PopupBox.ToggleCheckedContent>
+                                <materialDesign:PackIcon
                                 Kind="Pencil"
                                 Width="24"
                                 Height="24" />
-                        </materialDesign:PopupBox.ToggleCheckedContent>
-                        <StackPanel>
-                            <Button ToolTip="Refresh" Command="{s:Action OnRefresh}">
-                                <materialDesign:PackIcon Kind="Refresh" />
-                            </Button>
-                            <Button ToolTip="Add">
-                                <!--Command="{s:Action OnCreatePF}">-->
-                                <materialDesign:PackIcon Kind="Add" />
-                            </Button>
-                            <Button ToolTip="Remove">
-                                <materialDesign:PackIcon Kind="Remove" />
-                            </Button>
-                            <Button ToolTip="Clear">
-                                <materialDesign:PackIcon Kind="Trashcan" />
-                            </Button>
-                        </StackPanel>
-                    </materialDesign:PopupBox>
-                </Grid>
+                            </materialDesign:PopupBox.ToggleCheckedContent>
+                            <StackPanel>
+                                <Button ToolTip="Refresh" Command="{s:Action OnRefresh}">
+                                    <materialDesign:PackIcon Kind="Refresh" />
+                                </Button>
+                                <Button ToolTip="Add" Command="{s:Action OnCreatePF}">
+                                    <materialDesign:PackIcon Kind="Add"/>
+                                </Button>
+                                <Button ToolTip="Remove">
+                                    <materialDesign:PackIcon Kind="Remove" />
+                                </Button>
+                                <Button ToolTip="Clear">
+                                    <materialDesign:PackIcon Kind="Trashcan" />
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </Grid>
 
-            </GroupBox>
+                </GroupBox>
 
-            <GroupBox Margin="2 5 0 0"
+                <GroupBox Margin="2 5 0 0"
                       Header="Fast Forwarding">
-                <Grid>
-                    <ListView ItemsSource="{Binding Items2}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn
+                    <Grid>
+                        <ListView ItemsSource="{Binding Items2}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn
                                     DisplayMemberBinding="{Binding LocalPort}"
                                     Header="LocalPort" />
-                                <GridViewColumn
+                                    <GridViewColumn
                                     DisplayMemberBinding="{Binding DevicePort}"
                                     Header="DevicePort" />
-                                <GridViewColumn
+                                    <GridViewColumn
                                     DisplayMemberBinding="{Binding Description}"
                                     Header="Description" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <materialDesign:PopupBox
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <materialDesign:PopupBox
                         Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
                         PlacementMode="TopAndAlignCentres">
-                        <materialDesign:PopupBox.ToggleCheckedContent>
-                            <materialDesign:PackIcon
+                            <materialDesign:PopupBox.ToggleCheckedContent>
+                                <materialDesign:PackIcon
                                 Kind="Pencil"
                                 Width="24"
                                 Height="24" />
-                        </materialDesign:PopupBox.ToggleCheckedContent>
-                        <StackPanel>
-                            <Button ToolTip="Add">
-                                <materialDesign:PackIcon Kind="Add" />
-                            </Button>
-                            <Button ToolTip="Remove">
-                                <materialDesign:PackIcon Kind="Remove" />
-                            </Button>
-                            <Button ToolTip="Clear">
-                                <materialDesign:PackIcon Kind="Trashcan" />
-                            </Button>
-                        </StackPanel>
-                    </materialDesign:PopupBox>
+                            </materialDesign:PopupBox.ToggleCheckedContent>
+                            <StackPanel>
+                                <Button ToolTip="Add">
+                                    <materialDesign:PackIcon Kind="Add" />
+                                </Button>
+                                <Button ToolTip="Remove">
+                                    <materialDesign:PackIcon Kind="Remove" />
+                                </Button>
+                                <Button ToolTip="Clear">
+                                    <materialDesign:PackIcon Kind="Trashcan" />
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
 
-                </Grid>
-            </GroupBox>
+                    </Grid>
+                </GroupBox>
+            </DockPanel>
 
-        </DockPanel>
-
-    </Grid>
+        </materialDesign:DialogHost>
+    </DockPanel>
 </UserControl>

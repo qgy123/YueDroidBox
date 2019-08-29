@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Interactivity;
+using MahApps.Metro.Controls;
+using MaterialDesignThemes.Wpf;
 using SharpAdbClient;
 using Stylet;
 using YueDroidBox.Core;
+using YueDroidBox.Core.Factory;
 
 namespace YueDroidBox.ViewModel
 {
@@ -13,15 +18,24 @@ namespace YueDroidBox.ViewModel
         public DeviceData CurrentDeviceData { get; set; }
         public ObservableCollection<ForwardData> ForwardItem { get; set; }
 
+        public object DialogContent { get; set; }
+
+        public bool IsDialogOpen { get; set; }
+
         private readonly IWindowManager _windowManager;
         private readonly IViewManager _viewManager;
+        private readonly IDialogModelFactory _dialogModelFactory;
         private readonly DeviceViewModel _deviceViewModel;
 
-        public PortForwardingViewModel(IWindowManager windowManager, IViewManager viewManager, DeviceViewModel deviceViewModel)
+        public PortForwardingViewModel(IWindowManager windowManager, 
+            IViewManager viewManager, 
+            IViewModelFactory viewModelFactory,
+            IDialogModelFactory dialogModelFactory)
         {
             _windowManager = windowManager;
             _viewManager = viewManager;
-            _deviceViewModel = deviceViewModel;
+            _dialogModelFactory = dialogModelFactory;
+            _deviceViewModel = viewModelFactory.CreateDeviceViewModel();
             this.DisplayName = "Port Forwarding";
         }
 
@@ -52,11 +66,36 @@ namespace YueDroidBox.ViewModel
 
         public void OnRefresh() => GetPortForwardingInfo();
 
-        public void OnCreatePF()
+        public async void OnCreatePF()
         {
             if (CurrentDeviceData == null) return;
+            var model = _dialogModelFactory.CreateAddPfDialogViewModel();
+            //DialogContent = _viewManager.CreateAndBindViewForModelIfNecessary(model);
+            //IsDialogOpen = true;
 
+            var view = _viewManager.CreateAndBindViewForModelIfNecessary(model);
+            //_windowManager.ShowDialog(view);
+            //DialogHost.Show(view, "RootDialog", ExtendedOpenedEventHandler, ExtendedClosingEventHandler);
             //AdbClient.Instance.CreateForward();
+
+            //var window = (Window)View.GetSelfAndAncestors().FirstOrDefault(a => a is Window);
+            var window = Window.GetWindow(View);
+
+            await DialogHostEx.ShowDialog(window, view);
+        }
+        private void ExtendedOpenedEventHandler(object sender, DialogOpenedEventArgs eventargs)
+        {
+            Console.WriteLine("Opened...");
+        }
+
+        private void ExtendedClosingEventHandler(object sender, DialogClosingEventArgs eventargs)
+        {
+            Console.WriteLine("Closing...");
+        }
+
+        public void OnCloseDialog()
+        {
+            IsDialogOpen = false;
         }
 
         public void SelectDevice()

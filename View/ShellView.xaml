@@ -11,6 +11,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:converter="clr-namespace:YueDroidBox.Util.Converter"
         d:DataContext="{d:DesignInstance viewModel:ShellViewModel}"
         BorderThickness="0"
         GlowBrush="Black"
@@ -19,19 +20,9 @@
         Loaded="{s:Action OnLoaded}"
         Title="{Binding DisplayName}" Height="450" Width="800">
 
-    <!--<mah:MetroWindow.Resources>
-        <dragablz:InterTabController x:Key="InterTabController" x:Shared="False" InterTabClient="{x:Static viewModel:ShellViewModel.InterTabClient}" />
-
-        <Style TargetType="dragablz:TabablzControl" BasedOn="{StaticResource {x:Type dragablz:TabablzControl}}">
-            <Setter Property="InterTabController" Value="{StaticResource InterTabController}" />
-        </Style>
-    </mah:MetroWindow.Resources>-->
-
-    <!--<controls:MetroWindow.Resources>
-        <Style TargetType="{x:Type dragablz:TabablzControl}" x:Key="TabStyle">
-            <Setter Property="Margin" Value="8 8 8 8" />
-        </Style>
-    </controls:MetroWindow.Resources>-->
+    <controls:MetroWindow.Resources>
+        <converter:InverseBooleanConverter x:Key="inverter"/>
+    </controls:MetroWindow.Resources>
 
     <controls:MetroWindow.TitleTemplate>
         <DataTemplate>
@@ -44,10 +35,11 @@
 
     <controls:MetroWindow.LeftWindowCommands>
         <controls:WindowCommands>
-            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
+            <ToggleButton IsEnabled="{Binding IsOpen,Converter={StaticResource inverter}, ElementName=RootDialogHost}"
+                          Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
                           MaxWidth="28"
                           MaxHeight="28"
-                          x:Name="MenuToggleButton"/>
+                          x:Name="MenuToggleButton" />
         </controls:WindowCommands>
     </controls:MetroWindow.LeftWindowCommands>
 
@@ -62,50 +54,54 @@
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
 
-    <Grid>
-        <!--dockablz:Layout IsTabStop="False" Focusable="False"-->
-        <dragablz:TabablzControl x:Name="MainTab" ItemsSource="{Binding TabContents}" HeaderMemberPath="Header" EmptyHeaderSizingHint="PreviousTab">
-            <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
-            </dragablz:TabablzControl.InterTabController>
-        </dragablz:TabablzControl>
-        <!--/dockablz:Layout-->
-        <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
-            <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
-                <materialDesign:DrawerHost.LeftDrawerContent>
-                    <DockPanel MinWidth="240">
-                        <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="24" Mode="PrimaryMid" DockPanel.Dock="Top">
-                            <DockPanel>
-                                <materialDesign:PackIcon MinWidth="38" MinHeight="38" HorizontalAlignment="Center" VerticalAlignment="Center" Kind="Android" />
-                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18">
+    <materialDesign:DialogHost x:Name="RootDialogHost" Identifier="Root">
+
+        <Grid>
+            <!--dockablz:Layout IsTabStop="False" Focusable="False"-->
+            <dragablz:TabablzControl x:Name="MainTab" ItemsSource="{Binding TabContents}" HeaderMemberPath="Header" EmptyHeaderSizingHint="PreviousTab">
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
+                </dragablz:TabablzControl.InterTabController>
+            </dragablz:TabablzControl>
+            <!--/dockablz:Layout-->
+            <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+                <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+                    <materialDesign:DrawerHost.LeftDrawerContent>
+                        <DockPanel MinWidth="240">
+                            <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="24" Mode="PrimaryMid" DockPanel.Dock="Top">
+                                <DockPanel>
+                                    <materialDesign:PackIcon MinWidth="38" MinHeight="38" HorizontalAlignment="Center" VerticalAlignment="Center" Kind="Android" />
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18">
                                 ToolBox
-                                </TextBlock>
-                            </DockPanel>
-                        </materialDesign:ColorZone>
-                        <ItemsControl x:Name="MenuItemsListBox" Margin="0 16 0 16"
+                                    </TextBlock>
+                                </DockPanel>
+                            </materialDesign:ColorZone>
+                            <ItemsControl x:Name="MenuItemsListBox" Margin="0 16 0 16"
                              ItemsSource="{Binding MenuItems}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="viewModel:MenuItemViewModel">
-                                    <ListBoxItem x:Name="Border" Padding="8">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="PreviewMouseDown">
-                                                <i:InvokeCommandAction Command="{s:Action OpenTab}" CommandParameter="{Binding Content}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <TextBlock Text="{Binding Name}" Margin="32 0 32 0"/>
-                                    </ListBoxItem>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="viewModel:MenuItemViewModel">
+                                        <ListBoxItem x:Name="Border" Padding="8">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="PreviewMouseDown">
+                                                    <i:InvokeCommandAction Command="{s:Action OpenTab}" CommandParameter="{Binding Content}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <TextBlock Text="{Binding Name}" Margin="32 0 32 0"/>
+                                        </ListBoxItem>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
 
-                    </DockPanel>
-                </materialDesign:DrawerHost.LeftDrawerContent>
+                        </DockPanel>
+                    </materialDesign:DrawerHost.LeftDrawerContent>
 
-            </materialDesign:DrawerHost>
-        </materialDesign:DialogHost>
+                </materialDesign:DrawerHost>
+            </materialDesign:DialogHost>
 
-        <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar"/>
+            <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar"/>
 
-    </Grid>
+        </Grid>
+
+    </materialDesign:DialogHost>
 
 </controls:MetroWindow>

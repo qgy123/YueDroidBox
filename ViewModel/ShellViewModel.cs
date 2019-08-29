@@ -10,7 +10,9 @@ using Dragablz;
 using SharpAdbClient;
 using Stylet;
 using YueDroidBox.Core;
+using YueDroidBox.Core.Factory;
 using YueDroidBox.Util;
+using YueDroidBox.ViewModel.Dialog;
 
 namespace YueDroidBox.ViewModel
 {
@@ -42,7 +44,7 @@ namespace YueDroidBox.ViewModel
 
             MenuItems = new[]
             {
-                new MenuItemViewModel("Port Forwarding", _viewModelFactory.CreatePortForwardingViewModelViewModel),
+                new MenuItemViewModel("Port Forwarding", _viewModelFactory.CreatePortForwardingViewModel),
             };
         }
 
@@ -80,10 +82,6 @@ namespace YueDroidBox.ViewModel
             Console.WriteLine($@"The device {e.Device.Name} has connected to this PC");
         }
 
-        public interface IViewModelFactory
-        {
-            DeviceViewModel CreateDeviceViewModel();
-            PortForwardingViewModel CreatePortForwardingViewModelViewModel();
-        }
+
     }
 }

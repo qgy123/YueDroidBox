@@ -81,7 +81,8 @@ namespace YueDroidBox.ViewModel
             //var window = (Window)View.GetSelfAndAncestors().FirstOrDefault(a => a is Window);
             var window = Window.GetWindow(View);
 
-            await DialogHostEx.ShowDialog(window, view);
+            var result = await DialogHostEx.ShowDialog(window, view, ExtendedOpenedEventHandler, ExtendedClosingEventHandler);
+            
         }
         private void ExtendedOpenedEventHandler(object sender, DialogOpenedEventArgs eventargs)
         {

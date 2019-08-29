@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentValidation;
 using Stylet;
 using StyletIoC;
 using YueDroidBox.Core;
@@ -21,6 +22,10 @@ namespace YueDroidBox
 
             builder.Bind<IViewModelFactory>().ToAbstractFactory();
             builder.Bind<IDialogModelFactory>().ToAbstractFactory();
+
+            builder.Bind(typeof(IModelValidator<>)).To(typeof(FluentModelValidator<>));
+            builder.Bind(typeof(IValidator<>)).ToAllImplementations();
+
         }
 
         protected override void Configure()

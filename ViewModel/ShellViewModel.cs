@@ -24,10 +24,9 @@ namespace YueDroidBox.ViewModel
 
         private readonly IWindowManager _windowManager;
         private readonly IViewManager _viewManager;
-
         private readonly IViewModelFactory _viewModelFactory;
+
         private readonly DeviceViewModel _deviceViewModel;
-        //private readonly PortForwardingViewModel _portForwardingViewModel;
 
         public ShellViewModel(IWindowManager windowManager, IViewManager viewManager,
             IViewModelFactory viewModelFactory)
@@ -35,9 +34,7 @@ namespace YueDroidBox.ViewModel
             this.DisplayName = "YueDroidBox";
             _windowManager = windowManager;
             _viewManager = viewManager;
-            //_deviceViewModel = deviceViewModel;
             _viewModelFactory = viewModelFactory;
-            //_portForwardingViewModel = portForwardingViewModel;
             _deviceViewModel = viewModelFactory.CreateDeviceViewModel();
             //InterTabClient = new CustomTabClient();
             InterTabClient = new InterTabClient();
@@ -50,9 +47,6 @@ namespace YueDroidBox.ViewModel
 
         public void OpenTab(Func<Screen> content)
         {
-            // Todo: content can be factory or viewmodel
-            //var s = menuItemViewModel as Screen;
-            //var s = _viewModelFactory.CreatePortForwardingViewModelViewModel(); // Todo: for testing
             var s = content.Invoke();
             var view = _viewManager.CreateViewForModel(s);
             _viewManager.BindViewToModel(view, s);
@@ -61,8 +55,6 @@ namespace YueDroidBox.ViewModel
 
         public void SelectDevice()
         {
-            //var deviceList = new List<DeviceData>();
-            //_deviceViewModel.ToggleSingleSelectionMode();
             _windowManager.ShowDialog(_deviceViewModel);
             Console.WriteLine(@"Selected devices:");
 

@@ -51,6 +51,9 @@
     <Reference Include="Dragablz, Version=0.0.3.203, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Dragablz.0.0.3.203\lib\net45\Dragablz.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>packages\FluentValidation.8.4.0\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\MahApps.Metro.1.6.5\lib\net46\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -97,6 +100,10 @@
       <HintPath>packages\Stylet.1.2.0\lib\net45\Stylet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -136,11 +143,13 @@
     <Compile Include="Core\Factory\IDialogModelFactory.cs" />
     <Compile Include="Core\Factory\IViewModelFactory.cs" />
     <Compile Include="Core\IoC.cs" />
+    <Compile Include="FluentModelValidator.cs" />
     <Compile Include="Model\Adb\ForwardingInfo.cs" />
     <Compile Include="Model\PortForwardingItem.cs" />
     <Compile Include="Util\Converter\InverseBooleanConverter.cs" />
     <Compile Include="Util\CustomTabClient.cs" />
     <Compile Include="Util\InterTabClient.cs" />
+    <Compile Include="Util\Stringable.cs" />
     <Compile Include="ViewModel\Dialog\AddPFDialogViewModel.cs" />
     <Compile Include="ViewModel\NewSubWindowViewModel.cs" />
     <Compile Include="ViewModel\TabContent.cs" />

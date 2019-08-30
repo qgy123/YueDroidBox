@@ -80,7 +80,7 @@
                 <GroupBox Margin="0 5 2 0"
                       Header="Forwarding List">
                     <Grid>
-                        <ListView ItemsSource="{Binding ForwardItem}">
+                        <ListView ItemsSource="{Binding ForwardItem}" SelectedItem="{Binding SelectedItem}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn
@@ -114,10 +114,10 @@
                                 <Button ToolTip="Add" Command="{s:Action OnCreatePF}">
                                     <materialDesign:PackIcon Kind="Add"/>
                                 </Button>
-                                <Button ToolTip="Remove">
+                                <Button ToolTip="Remove" Command="{s:Action OnRemoveSelectedForward}">
                                     <materialDesign:PackIcon Kind="Remove" />
                                 </Button>
-                                <Button ToolTip="Clear">
+                                <Button ToolTip="Clear" Command="{s:Action OnClearAllPF}">
                                     <materialDesign:PackIcon Kind="Trashcan" />
                                 </Button>
                             </StackPanel>

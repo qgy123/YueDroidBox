@@ -22,6 +22,8 @@ namespace YueDroidBox.ViewModel
 
         public bool IsDialogOpen { get; set; }
 
+        public ForwardData SelectedItem { get; set; }
+
         private readonly IWindowManager _windowManager;
         private readonly IViewManager _viewManager;
         private readonly IDialogModelFactory _dialogModelFactory;
@@ -86,9 +88,58 @@ namespace YueDroidBox.ViewModel
             {
                 Console.WriteLine(model.Local);
                 Console.WriteLine(model.Remote);
+
+                try
+                {
+                    AdbClient.Instance.CreateForward(CurrentDeviceData, model.Local, model.Remote);
+                }
+                catch (Exception e)
+                {
+                }
+
+                GetPortForwardingInfo();
             }
 
         }
+
+        public void OnClearAllPF()
+        {
+            try
+            {
+                AdbClient.Instance.RemoveAllForwards(CurrentDeviceData);
+            }
+            catch (Exception e)
+            {
+                
+            }
+
+            GetPortForwardingInfo();
+
+        }
+
+        public void OnRemoveSelectedForward()
+        {
+            if (CurrentDeviceData == null) return;
+
+            var devices = Engine.Instance().GetDevices();
+
+            var device = devices.FirstOrDefault(data => data.Serial == SelectedItem.SerialNumber);
+
+            if (device == null) return;
+
+            try
+            {
+                AdbClient.Instance.RemoveForward(device, SelectedItem.LocalSpec.Port);
+
+            }
+            catch (Exception e)
+            {
+                
+            }
+
+            GetPortForwardingInfo();
+        }
+
         private void ExtendedOpenedEventHandler(object sender, DialogOpenedEventArgs eventargs)
         {
             Console.WriteLine("Opened...");

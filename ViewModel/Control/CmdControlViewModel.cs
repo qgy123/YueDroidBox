@@ -6,13 +6,19 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Stylet;
 using YueDroidBox.Core.CmdHost;
+using YueDroidBox.View.Control;
 
 namespace YueDroidBox.ViewModel.Control
 {
     public class CmdControlViewModel : Screen, ICmdReceiver
     {
         public string CmdText { get; set; } = "";
-        public int CursorPosition { get; set; }
+
+        public int CursorPosition
+        {
+            get; 
+            set;
+        }
         public string Dir { get; private set; } = "";
         public int DataLen { get;  private set; }
         public int SelectionStart { get;  private set; }
@@ -137,9 +143,12 @@ namespace YueDroidBox.ViewModel.Control
         {
             // Todo:
             //Rst.Select(Rst.Text.Length, 0);
-            //CursorPosition = CmdText.Length;
-            SelectionStart = CmdText.Length;
-            SelectionLength = 0;
+            //CursorPosition = CmdText.Length -1;
+            //SelectionStart = CmdText.Length;
+            //SelectionLength = 0;
+            //((CmdControlView)View).FuckBox.Select(CmdText.Length, 0);
+
+            CursorPosition = CmdText.Length;
         }
 
         public string CompleteInput(string input, int index)

@@ -12,10 +12,10 @@
              d:DesignHeight="250" d:DesignWidth="450">
 
     <Grid>
-        <TextBox Style="{x:Null}"
+        <TextBox x:Name="FuckBox" Style="{x:Null}"
                  Text="{Binding Path=CmdText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  behavior:TextBoxCursorPositionBehavior.TrackCaretIndex="True"
-                 behavior:TextBoxCursorPositionBehavior.CursorPosition="{Binding CursorPosition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 behavior:TextBoxCursorPositionBehavior.CursorPosition="{Binding CursorPosition, Mode=TwoWay}"
                  behavior:TextBoxScrollToEndBehaviour.ScrollOnTextChanged="True"
                  TextWrapping="Wrap" 
                  AcceptsReturn="True"

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using System.Windows.Navigation;
 using FluentValidation;
 using MaterialDesignThemes.Wpf;
@@ -28,12 +29,16 @@ namespace YueDroidBox.ViewModel.Dialog
         {
             base.OnValidationStateChanged(changedProperties);
             // Fody can't weave other assemblies, so we have to manually raise this
-            this.NotifyOfPropertyChange(() => this.CanCloseDialogCommand);
+            this.NotifyOfPropertyChange(() => this.CanAccept);
         }
 
-        public void Accept() { _ = DialogHost.CloseDialogCommand; }
+        public void Accept()
+        {
+            ICommand c = DialogHost.CloseDialogCommand;
+            c.Execute(true);
+        }
 
-        public bool CanCloseDialogCommand
+        public bool CanAccept
         {
             get { return !this.HasErrors; }
         }
@@ -49,7 +54,7 @@ namespace YueDroidBox.ViewModel.Dialog
                 });
                 
                 RuleFor(x => x.Remote).Must(x => x.IsValid).WithMessage("{PropertyName} must be a valid number");
-                When(x => x.Local.IsValid, () =>
+                When(x => x.Remote.IsValid, () =>
                 {
                     RuleFor(x => x.Remote.Value).GreaterThan(0).WithName("Port").LessThan(65536).WithName("Port");
                 });

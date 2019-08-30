@@ -3,6 +3,7 @@ using FluentValidation;
 using Stylet;
 using StyletIoC;
 using YueDroidBox.Core;
+using YueDroidBox.Core.CmdHost;
 using YueDroidBox.Core.Factory;
 using YueDroidBox.ViewModel;
 

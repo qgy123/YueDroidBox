@@ -1,4 +1,5 @@
 ﻿using YueDroidBox.ViewModel;
+using YueDroidBox.ViewModel.Control;
 
 namespace YueDroidBox.Core.Factory
 {
@@ -6,5 +7,6 @@ namespace YueDroidBox.Core.Factory
     {
         DeviceViewModel CreateDeviceViewModel();
         PortForwardingViewModel CreatePortForwardingViewModel();
+        CmdControlViewModel CreateCmdControlViewModel();
     }
 }

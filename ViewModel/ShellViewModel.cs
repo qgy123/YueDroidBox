@@ -42,6 +42,7 @@ namespace YueDroidBox.ViewModel
             MenuItems = new[]
             {
                 new MenuItemViewModel("Port Forwarding", _viewModelFactory.CreatePortForwardingViewModel),
+                new MenuItemViewModel("Cmd Window", _viewModelFactory.CreateCmdControlViewModel),
             };
         }
 

@@ -156,6 +156,7 @@
     <Compile Include="Util\Converter\InverseBooleanConverter.cs" />
     <Compile Include="Util\CustomTabClient.cs" />
     <Compile Include="Util\InterTabClient.cs" />
+    <Compile Include="Util\MyTextBox.cs" />
     <Compile Include="Util\Stringable.cs" />
     <Compile Include="ViewModel\Control\CmdControlViewModel.cs" />
     <Compile Include="ViewModel\Dialog\AddPFDialogViewModel.cs" />

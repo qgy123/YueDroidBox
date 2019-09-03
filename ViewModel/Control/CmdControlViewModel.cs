@@ -302,6 +302,7 @@ namespace YueDroidBox.ViewModel.Control
         {
             if (CursorPosition < DataLen)
             {
+                Console.WriteLine("Can't edit!");
                 return true;
             }
 

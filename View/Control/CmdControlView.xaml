@@ -12,26 +12,29 @@
              d:DesignHeight="250" d:DesignWidth="450">
 
     <Grid>
-        <TextBox x:Name="FuckBox" Style="{x:Null}"
-                 Text="{Binding Path=CmdText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 behavior:TextBoxCursorPositionBehavior.TrackCaretIndex="True"
-                 behavior:TextBoxCursorPositionBehavior.CursorPosition="{Binding CursorPosition, Mode=TwoWay}"
-                 behavior:TextBoxScrollToEndBehaviour.ScrollOnTextChanged="True"
-                 TextWrapping="Wrap" 
-                 AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto"
-                 VerticalAlignment="Stretch"
-                 HorizontalAlignment="Stretch"
-                 BorderThickness="0"
-                 BorderBrush="Transparent"
-                 Background="#0C0C0C"
-                 Foreground="#CCCCCC"
-                 FontFamily="Consolas" 
-                 PreviewKeyDown="{s:Action OnPreviewKeyDown}">
-            <!--<i:Interaction.Behaviors>
+        <DockPanel>
+            <TextBlock Width="50" Text="{Binding CursorPosition}" DockPanel.Dock="Top"/>
+            <TextBox x:Name="FuckBox" Style="{x:Null}"
+                     behavior:TextBoxCursorPositionBehavior.TrackCaretIndex="True"
+                     behavior:TextBoxCursorPositionBehavior.CursorPosition="{Binding CursorPosition, Mode=TwoWay}"
+                     Text="{Binding Path=CmdText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     TextWrapping="Wrap" 
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     BorderThickness="0"
+                     BorderBrush="Transparent"
+                     Background="#0C0C0C"
+                     Foreground="#CCCCCC"
+                     FontFamily="Consolas" 
+                     PreviewKeyDown="{s:Action OnPreviewKeyDown}">
+                <!--<i:Interaction.Behaviors>
                 <behavior:PutCursorAtEndTextBoxBehavior/>
             </i:Interaction.Behaviors>-->
-        </TextBox>
+            </TextBox>
+
+        </DockPanel>
 
     </Grid>
 </UserControl>
